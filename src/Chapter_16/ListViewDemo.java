@@ -1,6 +1,7 @@
 package Chapter_16;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -18,23 +19,23 @@ public class ListViewDemo extends Application {
 
     // Declare an ImageView array for the national flags of 9 countries
     private ImageView[] imageViews = {
-            new ImageView("file:/C:/Users/Константин/" +
+            new ImageView("file:/C:/Users/Konstantin/" +
                     "IdeaProjects/Introduction_to_java/book/image/ca.gif"),
-            new ImageView("file:/C:/Users/Константин/" +
+            new ImageView("file:/C:/Users/Konstantin/" +
                     "IdeaProjects/Introduction_to_java/book/image/china.gif"),
-            new ImageView("file:/C:/Users/Константин/" +
+            new ImageView("file:/C:/Users/Konstantin/" +
                     "IdeaProjects/Introduction_to_java/book/image/denmark.gif"),
-            new ImageView("file:/C:/Users/Константин/" +
+            new ImageView("file:/C:/Users/Konstantin/" +
                     "IdeaProjects/Introduction_to_java/book/image/fr.gif"),
-            new ImageView("file:/C:/Users/Константин/" +
+            new ImageView("file:/C:/Users/Konstantin/" +
                     "IdeaProjects/Introduction_to_java/book/image/germany.gif"),
-            new ImageView("file:/C:/Users/Константин/" +
+            new ImageView("file:/C:/Users/Konstantin/" +
                     "IdeaProjects/Introduction_to_java/book/image/india.gif"),
-            new ImageView("file:/C:/Users/Константин/" +
+            new ImageView("file:/C:/Users/Konstantin/" +
                     "IdeaProjects/Introduction_to_java/book/image/norway.gif"),
-            new ImageView("file:/C:/Users/Константин/" +
+            new ImageView("file:/C:/Users/Konstantin/" +
                     "IdeaProjects/Introduction_to_java/book/image/uk.gif"),
-            new ImageView("file:/C:/Users/Константин/" +
+            new ImageView("file:/C:/Users/Konstantin/" +
                     "IdeaProjects/Introduction_to_java/book/image/us.gif"),
     };
 
@@ -53,10 +54,13 @@ public class ListViewDemo extends Application {
 
         lv.getSelectionModel().selectedItemProperty().addListener(
                 ov -> {
-                    imagePane.getChildren().clear();
-                    for (Integer i: lv.getSelectionModel().getSelectedIndices()) {
-                        imagePane.getChildren().add(imageViews[i]);
-                    }
+                    Platform.runLater(() -> {  // Run from JavaFX GUI
+                        imagePane.getChildren().clear();
+                        for (Integer i: lv.getSelectionModel().getSelectedIndices()) {
+                            imagePane.getChildren().add(imageViews[i]);
+                        }
+                    });
+
                 }
         );
 
